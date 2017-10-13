@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" type="text/css"
+	href="./bower_components/bootstrap/dist/css/bootstrap.min.css" />
+
+<style type="text/css">
+.table tbody {
+	border: 2px solid #ccc;
+}
+</style>
+</head>
+<body ng-app="myApp">
+	<div class="container" ng-controller="AppController as vm">
+		<div class="row">
+			<div class="col-md-5">
+				<h1 style="margin: 0;">Process Status Demo App</h1>
+			</div>
+		</div>
+
+		<br /> <br />
+
+		<div class="row">
+			<div class="col-md-8">
+				<form class="form-horizontal" role="form">
+					<div class="form-group">
+						<label>Select a Process: </label> <select
+							ng-model="vm.processSelected"
+							ng-options="item as item.label for item in vm.processItems track by item.id">
+						</select>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<div ng-show="vm.processSelected">
+			<h1>Process '{{vm.processSelected.label}}' status</h1>
+
+			<hr />
+
+			<table class="table table-hover table-striped">
+				<thead>
+					<tr>
+						<td>Step #</td>
+						<td>Step Description</td>
+						<td>Script Name</td>
+						<td>Process Type</td>
+						<td>Process Owner</td>
+						<td>Status</td>
+					</tr>
+				</thead>
+				<tbody ng-repeat="step in vm.stepsStatus.steps track by $index">
+					<tr ng-repeat="scripts in step.scripts"
+						ng-class="scripts.error ? 'danger' : 'success'">
+						<td rowspan="{{step.scripts.length}}" ng-hide="$index>0"
+							style="background-color: #fff;">{{step.stepNumber}}</td>
+						<!-- <td rowspan="{{step.scripts.length}}" ng-hide="$index>0" >{{step.stepDescription}}</td> -->
+						<td>{{scripts.stepDescription}}</td>
+						<td>{{scripts.scriptName}}</td>
+						<td>{{scripts.processType}}</td>
+						<td>{{scripts.processOwner}}</td>
+						<td>{{scripts.processStatus}}</td>
+					</tr>
+				</tbody>
+			</table>
+
+		</div>
+		<hr />
+
+
+	</div>
+
+	<script type="text/javascript"
+		src="./bower_components/angular/angular.min.js"></script>
+	<script type="text/javascript"
+		src="./bower_components/angular-resource/angular-resource.min.js"></script>
+
+	<script src="./bower_components/jquery/dist/jquery.min.js"></script>
+	<script src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="./bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+
+
+	<script type="text/javascript"
+		src="./bower_components/lodash/dist/lodash.min.js"></script>
+
+	<script type="text/javascript" src="./app/app.js"></script>
+	<script type="text/javascript" src="./app/controllers.js"></script>
+	<script type="text/javascript" src="./app/services.js"></script>
+</body>
+</html>
